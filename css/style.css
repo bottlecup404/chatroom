@@ -1,0 +1,948 @@
+@charset "UTF-8";
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(var(--vh) * 100);
+    transition: background-image 0.5s ease-in-out;
+    background-color: #f8f9fa;
+    background-size: 100%
+}
+
+.login-container {
+    text-align: center
+}
+/* 文字效果样式 */
+.jump {
+    display: inline-block;
+    animation: jumpAnimation 0.5s infinite alternate;
+}
+
+@keyframes jumpAnimation {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-5px); }
+}
+
+.shake {
+    display: inline-block;
+    animation: shakeAnimation 0.1s infinite;
+}
+
+@keyframes shakeAnimation {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    50% { transform: translateX(0); }
+    75% { transform: translateX(2px); }
+    100% { transform: translateX(0); }
+}
+/* 图片容器样式 */
+.image-container {
+    margin: 8px 0;
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+}
+
+/* 缩略图样式 */
+.image-thumbnail {
+    display: block;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.1);
+    max-width: 200px;
+    max-height: 200px;
+}
+
+.image-thumbnail img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s;
+}
+
+/* 鼠标悬停效果 */
+.image-thumbnail:hover img {
+    transform: scale(1.05);
+}
+
+.image-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 4px;
+    text-align: center;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.image-thumbnail:hover .image-overlay {
+    opacity: 1;
+}
+
+/* 图片模态框 */
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 10001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    align-items: center;
+    justify-content: center;
+}
+
+.image-modal-content {
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.image-modal-content img {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 4px;
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 35px;
+    cursor: pointer;
+}
+
+/* 暗黑模式适配 */
+.dark-theme .image-thumbnail {
+    border-color: rgba(255,255,255,0.1);
+}
+/* 上传按钮样式 */
+.upload-btn {
+    background-color: #4CAF50; /* 绿色 */
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    transition: background 0.3s;
+}
+
+.upload-btn:hover {
+    background-color: #45a049;
+}
+
+/* 上传进度条 */
+.upload-progress {
+    margin-top: 8px;
+    width: 100%;
+}
+
+.progress-bar {
+    height: 6px;
+    background: #ddd;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-bar::after {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: #4CAF50;
+    transition: width 0.3s;
+}
+
+.progress-text {
+    font-size: 0.8em;
+    color: #666;
+    margin-left: 20px;
+   
+}
+.upload-btn span {
+    display: block;
+    text-align: center;
+}
+/* 防止文本溢出 */
+.prevent-overflow {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 10; /* 限制最大行数 */
+    -webkit-box-orient: vertical;
+}
+
+/* 代码块溢出处理 */
+pre {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+/* 暗黑模式适配 */
+.dark-theme .upload-btn {
+    background-color: #2E7D32;
+}
+
+.dark-theme .upload-btn:hover {
+    background-color: #1B5E20;
+}
+
+.dark-theme .progress-text {
+    color: #aaa;
+}   
+
+/* 用户标签基础样式 */
+.htitle {
+    font-size: 0.8em;
+    margin-left: 5px;
+    padding: 2px 5px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.1);
+}
+
+/* 普通用户标签 - 蓝色 */
+.htitle.user {
+    color: #1E90FF;
+    border: 1px solid #1E90FF;
+}
+
+/* 管理员标签 - 金色 */
+.htitle.admin {
+    color: #FFD700;
+    border: 1px solid #FFD700;
+    background: rgba(255, 215, 0, 0.1);
+    font-weight: bold;
+}
+
+/* 机器人标签 - 绿色 */
+.htitle.owner {
+    color: #32CD32;
+    border: 1px solid #32CD32;
+}
+
+/* 普通用户名样式 */
+.message-username {
+    color: #1E90FF;
+    font-weight: 500;
+}
+
+/* 管理员用户名特殊样式 */
+.message-username.admin-username {
+    color: #FFD700;
+    font-weight: bold;
+}
+.chat-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column
+}
+
+.chat-header {
+    padding: 15px;
+    background: #007bff;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+
+.chat-title {
+    flex: 1;
+    text-align: left;
+    font-size: 1.2em;
+    font-weight: bold
+}
+
+.chat-time {
+    flex: 1;
+    text-align: center
+}
+
+.theme-switch {
+    flex: 1;
+    text-align: right
+}
+
+.chat-box {
+    flex: 1;
+    padding: 0px;
+    overflow-y: auto;
+    background: #f9f9f9
+}
+
+.chat-input {
+    display: flex;
+    padding: 15px;
+    border-top: 1px solid #ddd;
+    background: #fff
+}
+
+.chat-input textarea {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10px;
+    font-size: 1em
+}
+
+.chat-input button {
+    padding: 10px 20px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer
+}
+
+.chat-input #sends {
+    padding: 10px 15px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    cursor: pointer
+}
+
+.chat-input button:hover {
+    background: #0056b3
+}
+
+.dark-theme {
+    background-color: #121212;
+    color: #e0e0e0
+}
+
+.dark-theme .chat-container {
+    background: #1e1e1e;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5)
+}
+
+.dark-theme .chat-header {
+    background: linear-gradient(90deg, #2a6ccf, #003cbf)
+}
+
+.dark-theme .chat-box {
+    background: #2b2b2b
+}
+
+.dark-theme .chat-input {
+    background: #3b3b3b;
+    border-top: 1px solid #444
+}
+
+.dark-theme .modal-content {
+    background: #2b2b2b
+}
+
+.dark-theme .chat-input input {
+    background: #4b4b4b;
+    color: #e0e0e0
+}
+
+.dark-theme .chat-input button:hover {
+    background: #777
+}
+
+.dark-theme #chatPopup-com {
+    background-color: #3b3b3a
+}
+
+@media (max-width:768px) {
+    .chat-container {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 0
+    }
+}
+
+a {
+    text-decoration: none;
+    font-weight: bold;
+    color: red
+}
+
+a:visited {
+    color: red
+}
+
+a:hover {
+    color: darkred
+}
+
+a:active {
+    color: crimson
+}
+
+#chatPopup-com {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 90%;
+    max-width: 500px;
+    height: 60vh;
+    padding: 20px;
+    background-color: white;
+    border-radius: 0px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease
+}
+
+#chatPopup-com.active {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    pointer-events: auto
+}
+
+.popup-header-com {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px
+}
+
+.popup-header-coms {
+    flex: 1;
+    overflow-y: auto
+}
+
+.popup-header-com h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #4CAF50
+}
+
+.popup-header-com button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #FF5722
+}
+
+.popup-section-com {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center
+}
+
+.popup-section-com label {
+    flex: 1;
+    font-size: 16px
+}
+
+.popup-section-com input {
+    flex: 2;
+    padding: 10px;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px
+}
+
+.popup-section-com button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s
+}
+
+.popup-section-com button:hover {
+    background-color: #45a049
+}
+
+.popup-section-com button.send {
+    background-color: #008CBA
+}
+
+.popup-section-com button.send:hover {
+    background-color: #007BB5
+}
+
+body,
+.chat-container,
+.chat-header,
+.chat-box,
+.chat-input,
+.message,
+.modal-content,
+.message-content,
+.dark-theme .chat-header,
+.dark-theme .chat-input,
+.dark-theme .message {
+    transition: all 0.3s
+}
+
+.toggle-theme {
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2)
+}
+
+.toggle-theme:hover {
+    background-color: #907bff;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px)
+}
+
+.toggle-theme:active {
+    background-color: #567cff;
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px)
+}
+
+.toggle-theme:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(72, 239, 128, 0.5)
+}
+
+.card-help {
+    --gold-1: #fff3d1;
+    --gold-2: #ffd700;
+    --gold-3: #ffb300;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.1)
+}
+
+.card-help {
+    background: linear-gradient(145deg, var(--gold-1), var(--gold-2));
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    padding: 1rem;
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    color: #2c3e50;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    animation: cardEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)
+}
+
+.card-help h2 {
+    margin: 0 0 1rem;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    position: relative;
+    font-weight: 0
+}
+
+.buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center
+}
+
+.primary-btn,
+.secondary-btn {
+    padding: 0.8rem 1rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.secondary-btn {
+    background: rgba(255, 255, 255, 0.9);
+    color: #2c3e50;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.3)
+}
+
+.primary-btn {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: white;
+    position: relative;
+    overflow: hidden
+}
+
+@keyframes cardEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1)
+    }
+}
+
+img {
+    border-radius: 15px
+}
+
+.settings-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    display: flex
+}
+
+.modal.show {
+    opacity: 1;
+    pointer-events: auto
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center
+}
+
+.icon-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #ccc;
+    cursor: pointer
+}
+
+.icon.selected {
+    border: 3px solid #007bff
+}
+
+.name-input {
+    width: 95%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between
+}
+
+.buttons button {
+    padding: 10px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer
+}
+
+.save-button {
+    background-color: #007bff;
+    color: white
+}
+
+.cancel-button {
+    background-color: #ccc;
+    color: black
+}
+
+.message-timestamp b {
+    position: absolute;
+    right: 0;
+    bottom: 0
+}
+
+.headIcon {
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.8)
+}
+
+.chat-box {
+    scroll-behavior: smooth;
+    padding: 0px;
+    width: 100%;
+    position: relative;
+    font-size: 18px;
+    background-color: rgba(255, 255, 255, 0);
+    overflow-y: auto;
+    overflow-x: hidden
+}
+
+.chat-box .tips {
+    margin: 12px;
+    text-align: center;
+    font-size: 12px
+}
+
+.chat-box .tips span {
+    display: inline-block;
+    padding: 4px;
+    background-color: #ccc;
+    color: #fff;
+    border-radius: 6px
+}
+
+[class="dark-theme"] .chat-box .tips span {
+    background-color: rgba(0, 0, 0, 0.3)
+}
+
+[class="dark-theme"] .chat-box .tips span {
+    color: #bec5cc
+}
+
+.chat-box .tips .tips-primary {
+    background-color: #3986c8
+}
+
+[class="dark-theme"] .chat-box .tips .tips-primary {
+    background-color: rgb(68, 127, 178)
+}
+
+.chat-box .tips .tips-success {
+    background-color: #49b649
+}
+
+[class="dark-theme"] .chat-box .tips .tips-success {
+    background-color: rgb(102, 166, 81)
+}
+
+.chat-box .tips .tips-info {
+    background-color: #5bb6d1
+}
+
+[class="dark-theme"] .chat-box .tips .tips-info {
+    background-color: rgb(63, 136, 158)
+}
+
+.chat-box .tips .tips-warning {
+    background-color: #eea948
+}
+
+[class="dark-theme"] .chat-box .tips .tips-warning {
+    background-color: rgb(175, 119, 40)
+}
+
+.chat-box .tips .tips-danger {
+    background-color: #e24d48
+}
+
+[class="dark-theme"] .chat-box .tips .tips-danger {
+    background-color: rgb(173, 53, 49)
+}
+
+[class="dark-theme"] .chat-box {
+    background-color: #131415
+}
+
+.chat-box .cmsg {
+    position: relative;
+    margin: 4px 7px;
+    min-height: 50px;
+    border: 0
+}
+
+.chat-box .cright {
+    text-align: right;
+    margin-left: 64px
+}
+
+.chat-box .cright img.headIcon {
+    right: 0
+}
+
+.chat-box .cright .message-username {
+    margin: 0 48px 2px 0
+}
+
+.chat-box .cright .message-content {
+    margin: 0 48px 0 0;
+    border-radius: 20px 0 20px 20px;
+    color: white;
+    background: -o-linear-gradient(70deg, rgba(63, 143, 225, 0.8) 0%, #44d7c9 100%);
+    background: linear-gradient(20deg, rgba(63, 143, 225, 0.8) 0%, #44d7c9 100%);
+    -webkit-box-shadow: 5px 5px 15px 0 rgba(102, 102, 102, 0.15);
+    box-shadow: 5px 5px 15px 0 rgba(102, 102, 102, 0.15)
+}
+
+[class="dark-theme"] .chat-box .cright .message-content {
+    background: -o-linear-gradient(70deg, rgba(25, 91, 159, 0.8) 0px, rgb(33, 154, 146) 100%);
+    background: linear-gradient(20deg, rgba(25, 91, 159, 0.8) 0px, rgb(33, 154, 146) 100%)
+}
+
+.chat-box .cright .message-content::after {
+    left: -12px;
+    top: 8px
+}
+
+.chat-box .message {
+    text-align: left;
+    margin-right: 64px
+}
+
+.chat-box .message img.headIcon {
+    left: 0
+}
+
+.chat-box .message .message-username {
+    margin: 0 0 2px 48px
+}
+
+.chat-box .message .message-content {
+    margin: 0 0 0 48px;
+    border-radius: 0 20px 20px 20px;
+    background: #fff;
+    color: #373737;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    -webkit-box-shadow: 5px 5px 15px 0 rgba(102, 102, 102, 0.1);
+    box-shadow: 5px 5px 15px 0 rgba(102, 102, 102, 0.1)
+}
+
+[class="dark-theme"] .chat-box .message .message-content {
+    background: #22242a
+}
+
+[class="dark-theme"] .chat-box .message .message-content {
+    color: #d4d4d4
+}
+
+.chat-box .message .message-content::after {
+    left: -12px;
+    top: 8px
+}
+
+.chat-box img.headIcon {
+    width: 34px;
+    height: 34px;
+    top: 9px;
+    position: absolute
+}
+
+.chat-box img.radius {
+    border-radius: 50%
+}
+
+.chat-box .message-username {
+    color: #8b8b8b;
+    font-size: 12px;
+    display: block;
+    line-height: 18px
+}
+
+.chat-box .message-username>span {
+    vertical-align: middle
+}
+
+.chat-box .message-username .htitle {
+    display: inline-block;
+    padding: 0 3px 0 3px;
+    background-color: #cccccc;
+    color: #ffffff;
+    border-radius: 4px;
+    margin-right: 4px;
+    font-size: 11px;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+    max-width: 50px
+}
+
+[class="dark-theme"] .chat-box .message-username .htitle {
+    background-color: rgb(76, 80, 82)
+}
+
+.chat-box .message-username .htitle.admin {
+    background-color: #72D6A0
+}
+
+[class="dark-theme"] .chat-box .message-username .htitle.admin {
+    background-color: rgb(60, 145, 110)
+}
+
+.chat-box .message-username .htitle.owner {
+    background-color: #F2BF25
+}
+
+[class="dark-theme"] .chat-box .message-username .htitle.owner {
+    background-color: rgb(154, 124, 33)
+}
+
+.chat-box .message-content {
+    word-break: break-all;
+    word-wrap: break-word;
+    text-align: left;
+    position: relative;
+    display: inline-block;
+    font-size: 15px;
+    padding: 10px 15px;
+    line-height: 20px;
+    white-space: pre-wrap;
+    min-width: 9px;
+    min-height: 18px
+}
+
+.chat-box .message-content img,
+.chat-box .message-content video,
+.chat-box .message-content audio {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 8px;
+    display: block;
+    margin-top: 0px
+}
+
+.chat-box .message-content a {
+    color: #0072C1;
+    margin: 0 5px;
+    cursor: hand
+}
+
+[class="dark-theme"] .chat-box .message-content a {
+    color: #00c3ff
+}
