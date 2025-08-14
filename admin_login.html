@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>管理员登录</title>
+    <script src="https://static.geetest.com/v4/gt4.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        body {
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+        .login-box {
+            background: white;
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+        #geetest-captcha {
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #43A047;
+        }
+        .error {
+            color: #f44336;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h1>管理员认证</h1>
+        <div id="geetest-captcha"></div>
+        <input type="password" id="password" placeholder="输入管理员密码(811926)">
+        <button id="loginBtn">进入聊天室</button>
+        <div id="errorMsg" class="error"></div>
+    </div>
+
+    <script>
+        
+        const geetestConfig = {
+            captchaId: "7a6a146faf12599b102fd945e9b4d63b", //id
+        };
+
+        // 初始化极验验证码
+        initGeetest4({
+            captchaId: geetestConfig.captchaId,
+            product: "float",
+            language: "zh-cn"
+        }, function(captcha) {
+            window.captchaObj = captcha;
+            captcha.appendTo("#geetest-captcha");
+            
+            document.getElementById('loginBtn').addEventListener('click', function() {
+                const result = captcha.getValidate();
+                if (!result) {
+                    showError('请完成验证码验证');
+                    captcha.reset(); // 重置验证码
+                    return;
+                }
+                
+                const password = document.getElementById('password').value;
+                if (!password) {
+                    showError('请输入密码');
+                    return;
+                }
+                
+                verifyLogin(password, result);
+            });
+        });
+
+        function showError(msg) {
+            document.getElementById('errorMsg').textContent = msg;
+        }
+
+        function verifyLogin(password, captchaData) {
+            fetch('/php/admin_login.php', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    password: password,
+                    geetest_challenge: captchaData.geetest_challenge,
+                    geetest_validate: captchaData.geetest_validate,
+                    geetest_seccode: captchaData.geetest_seccode
+                })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('网络响应异常');
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    localStorage.setItem('is_admin', 'true');
+                    window.location.href = 'index.html';
+                } else {
+                    showError(data.message || '验证失败');
+                    if (window.captchaObj) window.captchaObj.reset();
+                }
+            })
+            .catch(error => {
+                showError('网络错误: ' + error.message);
+                if (window.captchaObj) window.captchaObj.reset();
+            });
+        }
+    </script>
+</body>
+</html>
