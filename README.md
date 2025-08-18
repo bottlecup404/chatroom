@@ -8,8 +8,6 @@
 | English | [Documentation](README_EN.md) |
 
 ---
-## ©️ 版权声明
-...
 ## 前言寄语
 
 ```
