@@ -1,16 +1,33 @@
 # 多功能聊天室
 
-> 没有开玩笑 我又更新了...
+```
+千古有冬夏，一载经春秋。破浪长风扶摇起，夜深星源起处。
+天涯何处觅知音，春秋冬夏君相昔。
+一路有你，纵冰塞黄河，雪满太行，不畏，丈夫未可轻年少。
+愿我如星君如月，夜夜流光相皎洁。
 
-- 演示地址：[LikeGirl v5.1.0 (Demo)](https://lovey.kikiw.cn)
-  ![首页](https://img.gejiba.com/images/15eee53f2c5653ffaf9612ad37202252.png)
+感念一年来大家的支持与鼓励，批评和建议。
+聊天室 的明天在大家的努力下会更灿烂美好！
+————bottlecup 25/8/15
+```
+>聊天室最新版发布的时候，正是日本宣布无条件投降及世界反法西斯战争80周年！
+>此内容虽然与仓库内容无关，但值得我们铭记，向抗日战争，世界反法西斯战争中牺牲的英雄烈士致敬！
+---
+```
+寒窗苦读九春秋，一朝定乾坤。
+山岭越尽云雾散，霞光终万道。
+待蟾折桂题金榜，再叙一载过往！
+后会有期，明年再见，各位朋友，洒家告辞！
+————bottlecup 25/8/15
+```
 
+---
 ## 👨‍💻 关于作者
 **作者**：bottlecup
 **联系方式**：  
 - QQ: `3773493590`  
 - Telegram: [@bottlecups](https://t.me/bottlecups)  
-- GitHub: [@nfHeadwind](https://github.com/nfHeadwind)  
+- GitHub: [@bottlecup404](https://github.com/bottlecup404)  
 
 ### 前言
 *这个项目原来是我的一个朋友codbt的一个项目
@@ -46,7 +63,7 @@
 ### 食用方法
 
 - 将本文件所在的目录，一到一台能运行php的网站主机(虚拟机也可以)
-* 然后就可以了，访问http://你的域名/index.php就好了👌，快去聊天吧！！
+- 然后就可以了，访问http://你的域名/index.php就好了👌，快去聊天吧！！
 
 ###管理员配置
 - admin_login.html文件为后台登录界面，需在admin_login.html页面第83行填写极验id(官方获取)，/php/admin_login.php文件第5，6行配置极验id和key！！
@@ -60,16 +77,12 @@
 - 使用过程中如遇到bug或建议请反馈到邮箱 如超过`2小时`未回复可添加QQ好友进行咨询反馈
 - bottlecup@zohomail.cn
 
-## 网站演示
-
-[多功能聊天室](https://wwdd.lanzoue.com/b01kyo7na)
 
 
 ## 源码国内下载
 
-[点击下载发布版](https://wwdd.lanzoue.com/b01kyo7na)
+[点击下载发布版](https://wwp.lanzoup.com/iBAOB33lie5a)
 
-提取码：6666
 
 
 ## 多功能聊天室再续前缘更新日志
@@ -79,7 +92,7 @@
 
 ## 📥 Releases  
 最新版本下载：  
-- [v1.0.0](https://github.com/你的用户名/仓库名/releases/tag/v1.0.0)  
+- [v1.0.0](https://github.com/bottlecup404/chatroom/releases/tag/v2.2.5)  
 
 ## ©️ 版权声明  
 本项目采用 **MIT License**，详细条款请查看 [LICENSE](LICENSE) 文件。未经许可不得用于商业用途，转载请注明原作者及项目地址。
