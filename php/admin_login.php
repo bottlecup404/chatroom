@@ -2,8 +2,8 @@
 header('Content-Type: application/json');
 
 // 极验配置 - 必须修改以下两项
-define('GEETEST_CAPTCHA_ID', '写上自己的3b');  //id
-define('GEETEST_PRIVATE_KEY', '3c写上自己的277b6'); //key
+define('GEETEST_CAPTCHA_ID', '写上自己的id');  //id
+define('GEETEST_PRIVATE_KEY', '写上自己的key'); //key
 
 
 define('ADMIN_PASSWORD_HASH', 'aa027bf9f74d8fc6281da9e61853cf462e9105d3ddd522f4ebc7d3e4523c72e2');
