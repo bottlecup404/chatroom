@@ -1,4 +1,4 @@
-# 多功能聊天室
+# 多功能聊天室(新增AI)
 ---
 
 ## 🌐 Multilingual Support
